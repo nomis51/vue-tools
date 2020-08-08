@@ -1,0 +1,9 @@
+{
+  "name": "vue-tools",
+  "version": "1.0.0",
+  "description": "A set tools for Vue.js projects",
+  "main": "index.js",
+  "repository": "https://github.com/nomis51/vue-tools.git",
+  "author": "nomis51 <nomis51@github.com>",
+  "license": "GNU"
+}
