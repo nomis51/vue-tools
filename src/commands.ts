@@ -3,6 +3,7 @@ import { generateService } from './commands/generate-service'
 import { init } from "./commands/init";
 import { generateView } from "./commands/generate-view";
 import { genereateStore } from "./commands/generate-store";
+import { generateModule } from "./commands/generate-module";
 
 type Fn = (...args: any[]) => boolean;
 type GetParams = (obj: any) => any;
@@ -54,5 +55,13 @@ export const commands: Command[] = [
             ts: !obj.js
         }),
         fn: genereateStore
+    }, {
+        name: "generate module",
+        regex: /(generate module)|(g m)/gi,
+        getParams: (obj: any) => ({
+            name: obj.name,
+            ts: !obj.js
+        }),
+        fn: generateModule
     },
 ];

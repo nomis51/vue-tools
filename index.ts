@@ -10,19 +10,23 @@ const argv = command([
     'init',
 ], 'Configurate Vue Tools for the current project')
     .command([
-        'generate component [name]',
+        'generate component [name] [moduleName]',
         'g c',
     ], 'Generate a new component')
     .command([
-        'generate view [name]',
+        'generate view [name] [moduleName]',
         'g v'
     ], 'Generate a new view')
     .command([
-        'generate service [name]',
+        'generate service [name] [moduleName]',
         'g s'
     ], 'Generate a new service')
     .command([
-        'generate store [name]',
+        'generate module [name]',
+        'g m'
+    ], 'Generate a new module')
+    .command([
+        'generate store [name] [moduleName]',
         'g x'
     ], 'Generate a new Vuex store')
     .options({
