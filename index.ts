@@ -23,7 +23,7 @@ const argv = command([
     ], 'Generate a new service')
     .command([
         'generate store [name]',
-        'g t'
+        'g x'
     ], 'Generate a new Vuex store')
     .options({
         j: {
