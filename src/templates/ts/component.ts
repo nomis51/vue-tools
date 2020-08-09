@@ -11,7 +11,7 @@ import {
     name: '$name',
     components: {}
 })
-export default class $nameComponent extends Vue {
+export default class $NameComponent extends Vue {
     /**
      * Props
      */

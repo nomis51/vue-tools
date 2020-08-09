@@ -26,11 +26,11 @@ const argv = command([
         'g t'
     ], 'Generate a new Vuex store')
     .options({
-        d: {
-            alias: "directory",
+        j: {
+            alias: "js",
             demandOption: false,
-            describe: "Where the item needs to be generated",
-            type: "string"
+            describe: "Use JavaScript templates instead of TypeScript templates",
+            type: "boolean"
         }
     })
     .argv;
@@ -55,12 +55,13 @@ function parse(): boolean {
 
     const commandName: string = argv._[0] + (argv.store ? ` ${argv.store}` : '');
 
+    console.log('Command Name: ', commandName)
+
     if (commandName !== 'init' && !checkConfig()) {
         return;
     }
 
     for (const command of commands) {
-        console.log(command, commandName)
         if (!command.regex.test(commandName)) {
             continue;
         }
@@ -70,7 +71,7 @@ function parse(): boolean {
         delete args.$0;
         delete args.store;
 
-        return command.fn(...Object.values(args));
+        return command.fn(...Object.values(command.getParams(args)));
     }
 }
 
