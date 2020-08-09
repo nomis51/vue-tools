@@ -31,6 +31,11 @@ const argv = command([
             demandOption: false,
             describe: "Use JavaScript templates instead of TypeScript templates",
             type: "boolean"
+        },
+        e: {
+            alias: 'empty',
+            demandOption: false,
+            descrbe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components"
         }
     })
     .argv;

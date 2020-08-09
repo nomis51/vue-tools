@@ -30,7 +30,7 @@ function writeTemplateFile(templateFilePath: string, camelName: string, capName:
     writeFileSync(destFilePath, content, { encoding: 'utf8' });
 }
 
-export function generateComponent(name: string, ts: boolean = true): boolean {
+export function generateComponent(name: string, ts: boolean = true, noExamples: boolean = false): boolean {
     const { rootDir } = config();
     const fileExt: string = ts ? 'ts' : 'js';
 
@@ -62,7 +62,9 @@ export function generateComponent(name: string, ts: boolean = true): boolean {
         return false;
     }
 
-    writeTemplateFile(`./src/templates/${fileExt}/component.${fileExt}`, camelName, capName, `${path}/${camelName}.component.${fileExt}`);
+    console.log('Need exmaples: ', !noExamples)
+
+    writeTemplateFile(`./src/templates/${fileExt}/${(!noExamples ? '' : (ts ? 'no-examples-' : ''))}component.${fileExt}`, camelName, capName, `${path}/${camelName}.component.${fileExt}`);
     writeTemplateFile(`./src/templates/${fileExt}/component.vue`, camelName, capName, `${path}/${camelName}.component.vue`);
     writeTemplateFile(`./src/templates/${fileExt}/component.scss`, camelName, capName, `${path}/${camelName}.component.scss`);
 

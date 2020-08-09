@@ -18,7 +18,8 @@ export const commands: Command[] = [
         regex: /(generate component)|(g c)/gi,
         getParams: (obj: any) => ({
             name: obj.name,
-            ts: obj.ts
+            ts: !obj.js,
+            noExamples: !!obj.empty
         }),
         fn: generateComponent
     }, {
