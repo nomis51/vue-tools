@@ -1,4 +1,5 @@
 import { generateComponent } from "./commands/generate-component";
+import { generateService } from './commands/generate-service'
 import { init } from "./commands/init";
 
 type Fn = (...args: any[]) => boolean;
@@ -10,7 +11,6 @@ interface Command {
     getParams: GetParams,
     fn: Fn
 }
-
 
 export const commands: Command[] = [
     {
@@ -27,5 +27,13 @@ export const commands: Command[] = [
         regex: /init/gi,
         getParams: (obj: any) => ({}),
         fn: init
-    }
+    }, {
+        name: "generate service",
+        regex: /(generate service)|(g s)/gi,
+        getParams: (obj: any) => ({
+            name: obj.name,
+            ts: !obj.js,
+        }),
+        fn: generateService
+    },
 ];
