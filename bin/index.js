@@ -5,7 +5,8 @@ const commands_1 = require("./src/commands");
 const yargs_1 = require("yargs");
 const fs_1 = require("fs");
 const config_1 = require("./src/config");
-const argv = yargs_1.command([
+const argv = yargs_1.showHelpOnFail(true)
+    .command([
     'init',
 ], 'Configure Vue Tools for the current project')
     .command([
@@ -38,14 +39,17 @@ const argv = yargs_1.command([
     e: {
         alias: 'empty',
         demandOption: false,
-        descrbe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components"
+        describe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components",
+        type: "boolean"
     },
     m: {
         alias: 'module',
         demandOption: false,
-        descrbe: "The module where the item needs to be generated"
+        describe: "The module where the item needs to be generated",
+        type: "string"
     },
 })
+    .demandCommand()
     .argv;
 console.log('ARGS HERE: ', argv);
 function checkConfig() {
@@ -57,14 +61,14 @@ function checkConfig() {
     return config_1.config() !== undefined;
 }
 function parse() {
-    if (argv._.length != 1) {
-        yargs_1.help();
-        return;
+    if (argv._.length != 1 || argv.$0 === 'vt' || argv.$0.length === 0) {
+        yargs_1.showHelp();
+        return false;
     }
     const commandName = argv._[0] + (argv.store ? ` ${argv.store}` : '');
-    console.log('Command Name: ', commandName);
+    //   console.log('Command Name: ', commandName)
     if (commandName !== 'init' && !checkConfig()) {
-        return;
+        return false;
     }
     for (const command of commands_1.commands) {
         if (!command.regex.test(commandName)) {

@@ -2,11 +2,12 @@
 'use strict'
 
 import { commands } from './src/commands';
-import { command, help } from 'yargs';
+import { command, help, showHelpOnFail, showHelp } from 'yargs';
 import { existsSync } from 'fs';
 import { config } from './src/config'
 
-const argv = command([
+const argv = showHelpOnFail(true)
+.command([
     'init',
 ], 'Configure Vue Tools for the current project')
     .command([
@@ -39,14 +40,17 @@ const argv = command([
         e: {
             alias: 'empty',
             demandOption: false,
-            descrbe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components"
+            describe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components",
+            type: "boolean"
         },
         m: {
             alias: 'module',
             demandOption: false,
-            descrbe: "The module where the item needs to be generated"
+            describe: "The module where the item needs to be generated",
+            type:"string"
         },
     })
+    .demandCommand()
     .argv;
 
 console.log('ARGS HERE: ', argv);
@@ -62,17 +66,17 @@ function checkConfig(): boolean {
 }
 
 function parse(): boolean {
-    if (argv._.length != 1) {
-        help();
-        return;
+    if (argv._.length != 1 || argv.$0 === 'vt' || argv.$0.length === 0) {
+        showHelp();
+        return false;
     }
 
     const commandName: string = argv._[0] + (argv.store ? ` ${argv.store}` : '');
 
-    console.log('Command Name: ', commandName)
+    //   console.log('Command Name: ', commandName)
 
     if (commandName !== 'init' && !checkConfig()) {
-        return;
+        return false;
     }
 
     for (const command of commands) {
