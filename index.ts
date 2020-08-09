@@ -1,30 +1,60 @@
 #!/usr/bin/env node
 'use strict'
 
-import * as yargs from 'yargs'
-
 import { commands } from './src/commands';
+import { command, help } from 'yargs';
 
-const options = yargs
-    .usage("Usage: -n <name>")
-    .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
+const argv = command([
+    'generate component [name]',
+    'g c',
+], 'Generate a new component')
+    .command([
+        'generate view [name]',
+        'g v'
+    ], 'Generate a new view')
+    .command([
+        'generate service [name]',
+        'g s'
+    ], 'Generate a new service')
+    .command([
+        'generate store [name]',
+        'g t'
+    ], 'Generate a new Vuex store')
+    .options({
+        d: {
+            alias: "directory",
+            demandOption: false,
+            describe: "Where the item needs to be generated",
+            type: "string"
+        }
+    })
     .argv;
 
-function parse(input: string): void {
-    const splits: string[] = input.split(" ");
+console.log('ARGS HERE: ', argv);
+
+function parse(): boolean {
+    if (argv._.length != 1) {
+        help();
+        return;
+    }
+
+    const commandName: string = argv._[0] + (argv.store ? ` ${argv.store}` : '');
 
     for (const command of commands) {
-        for (const item of splits) {
-            if (command.regex.test(item)) {
-                const args = item.match(`(!?${command.regex})`);
-
-                if (args.length < command.nbArgs) {
-                    return console.warn(`The command "${command.name}" require ${command.nbArgs} argument${(command.nbArgs > 1 ? 's' : '')}`);
-                }
-
-
-            }
+        if (!command.regex.test(commandName)) {
+            help()
+            return
         }
+
+        const args = { ...argv };
+        delete args._;
+        delete args.$0;
+        delete args.store;
+
+        return command.fn(...Object.values(args));
     }
 }
 
+if (!parse()) {
+    console.error('Command failed')
+}

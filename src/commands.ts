@@ -1,17 +1,17 @@
 import { generateComponent } from "./commands/generate-component";
 
-export interface Command {
+type Fn = (...args: any[]) => boolean;
+
+interface Command {
     name: String,
     regex: RegExp,
-    nbArgs: Number,
-    fn: any
+    fn: Fn
 }
 
 export const commands: Command[] = [
     {
         name: "generate component",
-        regex: /(generate|g) (component|c) (-[d])*/gi,
-        nbArgs: 1,
+        regex: /(generate component)|(g c)/gi,
         fn: generateComponent
     }
 ];

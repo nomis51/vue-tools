@@ -1,5 +1,6 @@
 
 
-export function generateComponent(name: string, directory: string = "$src"): void {
-    console.log('Current dir: ', process.cwd());
+export function generateComponent(name: string, directory: string = "$src"): boolean {
+    console.log('Current dir: ',__dirname)
+    return true
 }
