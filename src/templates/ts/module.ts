@@ -1,5 +1,6 @@
 
 export default {
     name: "$name-module",
-    components: { }
+    components: { },
+    services: { },
 }

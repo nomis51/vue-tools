@@ -1,7 +1,7 @@
 import { writeFileSync, readFileSync } from "fs";
 
 export interface Replacement {
-    oldValue: RegExp,
+    oldValue?: RegExp | undefined,
     newValue: string
 }
 
