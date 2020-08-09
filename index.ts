@@ -8,7 +8,7 @@ import { config } from './src/config'
 
 const argv = command([
     'init',
-], 'Configurate Vue Tools for the current project')
+], 'Configure Vue Tools for the current project')
     .command([
         'generate component [name] [moduleName]',
         'g c',
