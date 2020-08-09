@@ -21,8 +21,18 @@ function ensureDirsExists(path: string): boolean {
     return true;
 }
 
-function writeTemplateFile(templateFilePath: string, name: string, destFilePath: string): void {
+function writeTemplateFile(templateFilePath: string, camelName: string, capName: string, destFilePath: string): void {
     let content: string = readFileSync(templateFilePath, { encoding: 'utf8' });
+
+    content = content.replace(/\$name/g, camelName);
+    content = content.replace(/\$Name/g, capName);
+
+    writeFileSync(destFilePath, content, { encoding: 'utf8' });
+}
+
+export function generateComponent(name: string, ts: boolean = true): boolean {
+    const { rootDir } = config();
+    const fileExt: string = ts ? 'ts' : 'js';
 
     let camelName: string = name.replace(/([A-Z])/g, '-$1').toLowerCase();
 
@@ -46,28 +56,15 @@ function writeTemplateFile(templateFilePath: string, name: string, destFilePath:
         }
     }
 
-    console.log('Camel name: ', camelName);
-    console.log('Cap name: ', capName);
-
-    content = content.replace(/\$name/g, camelName);
-    content = content.replace(/\$Name/g, capName);
-
-    writeFileSync(destFilePath, content, { encoding: 'utf8' });
-}
-
-export function generateComponent(name: string, ts: boolean = true): boolean {
-    const { rootDir } = config();
-    const path: string = `${rootDir}/components/${name}/`;
+    const path: string = `${rootDir}/components/${camelName}/`;
 
     if (!ensureDirsExists(path)) {
         return false;
     }
 
-    const fileExt: string = ts ? 'ts' : 'js';
-
-    writeTemplateFile(`./src/templates/${fileExt}/component.${fileExt}`, name, `${path}/${name}.component.${fileExt}`);
-    writeTemplateFile(`./src/templates/${fileExt}/component.vue`, name, `${path}/${name}.component.vue`);
-    writeTemplateFile(`./src/templates/${fileExt}/component.scss`, name, `${path}/${name}.component.scss`);
+    writeTemplateFile(`./src/templates/${fileExt}/component.${fileExt}`, camelName, capName, `${path}/${camelName}.component.${fileExt}`);
+    writeTemplateFile(`./src/templates/${fileExt}/component.vue`, camelName, capName, `${path}/${camelName}.component.vue`);
+    writeTemplateFile(`./src/templates/${fileExt}/component.scss`, camelName, capName, `${path}/${camelName}.component.scss`);
 
     return true
 }
