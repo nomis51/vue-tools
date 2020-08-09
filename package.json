@@ -1,5 +1,5 @@
 {
-  "name": "vue-tools",
+  "name": "@nomis51/vue-tools",
   "version": "1.0.0",
   "description": "A set tools for Vue.js projects",
   "main": "bin/index.js",
@@ -20,8 +20,5 @@
   },
   "bin": {
     "vt": "bin/index.js"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
