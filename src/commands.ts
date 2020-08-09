@@ -22,7 +22,8 @@ export const commands: Command[] = [
         getParams: (obj: any) => ({
             name: obj.name,
             ts: !obj.js,
-            noExamples: !!obj.empty
+            noExamples: !!obj.empty,
+            module: obj.module
         }),
         fn: generateComponent
     }, {
@@ -36,6 +37,7 @@ export const commands: Command[] = [
         getParams: (obj: any) => ({
             name: obj.name,
             ts: !obj.js,
+            module: obj.module
         }),
         fn: generateService
     }, {
@@ -44,7 +46,8 @@ export const commands: Command[] = [
         getParams: (obj: any) => ({
             name: obj.name,
             ts: !obj.js,
-            noExamples: !!obj.empty
+            noExamples: !!obj.empty,
+            module: obj.module
         }),
         fn: generateView
     }, {

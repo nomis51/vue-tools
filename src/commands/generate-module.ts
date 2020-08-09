@@ -16,6 +16,7 @@ export function generateModule(name: string, moduleName: string, ts: boolean = t
 
     ensureDirsExists(`${path}/components`);
     ensureDirsExists(`${path}/services`);
+    ensureDirsExists(`${path}/views`);
 
     writeTemplateFile(`./src/templates/${fileExt}/module.${fileExt}`, camelName, capName, `${path}/${camelName}.module.${fileExt}`);
 

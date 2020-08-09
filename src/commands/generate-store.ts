@@ -25,7 +25,7 @@ export function genereateStore(name: string, ts: boolean = true): boolean {
             newValue: `Vue.use(Vuex);\n\n${importStr}\n`
         }, {
             oldValue: /modules:( )*{(\n)*/gi,
-            newValue: `modules: {\n\t\t\t${capName},\n`
+            newValue: `modules: {\n\t\t${capName},\n`
         }
     ];
 

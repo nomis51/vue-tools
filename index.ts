@@ -40,7 +40,12 @@ const argv = command([
             alias: 'empty',
             demandOption: false,
             descrbe: "Don't add Watchers, Computed Values, Props annd Emitters examples in TypeScript components"
-        }
+        },
+        m: {
+            alias: 'module',
+            demandOption: false,
+            descrbe: "The module where the item needs to be generated"
+        },
     })
     .argv;
 
